@@ -1,21 +1,53 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+enum class Nivel { 
+    BASICO, 
+    INTERMEDIARIO, 
+    AVANCADO 
+}
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class Usuario(val nome: String, val email: String)
 
-class Usuario
+data class ConteudoEducacional(val nome: String, val duracao: Int = 60)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, val nivel: Nivel, val conteudos: MutableList<ConteudoEducacional>) {
 
     val inscritos = mutableListOf<Usuario>()
+    val listaInscritos: List<Usuario> = inscritos
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
     }
+    
+    fun imprimirLista() {
+        println(listaInscritos)
+    }
+    
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val formacao1 = Formacao("Desenvolvimento Web", Nivel.INTERMEDIARIO, mutableListOf<ConteudoEducacional>(
+        ConteudoEducacional("HTML", 40),
+        ConteudoEducacional("CSS", 30),
+        ConteudoEducacional("JS", 20)
+    ))
+    
+    val formacao2 = Formacao("Desenvolvimento de APIs", Nivel.AVANCADO, mutableListOf<ConteudoEducacional>(
+        ConteudoEducacional("Kotlin", 40),
+        ConteudoEducacional("POO", 30),
+        ConteudoEducacional("SpringBoot", 20)
+    ))
+
+    val usuario1 = Usuario("Pedro", "pedro@gmail.com")
+    val usuario2 = Usuario("Jeferson", "jeferson@gmail.com")
+    val usuario3 = Usuario("Bruno", "bruno@gmail.com")
+
+    formacao1.matricular(usuario1)
+    formacao1.matricular(usuario3)
+    
+    formacao2.matricular(usuario2)
+
+    println(formacao1)
+    formacao1.imprimirLista()
+    println()
+    println(formacao2)
+    formacao2.imprimirLista()
 }
